@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Our Anniversary 💖</title>
+<style>
+  body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    background: #fff0f5;
+    color: #333;
+    text-align: center;
+  }
+
+  .screen { display: none; padding: 20px; }
+  .screen.active { display: block; }
+
+  .phone {
+    max-width: 300px;
+    margin: 50px auto;
+    padding: 20px;
+    background: #fff;
+    border-radius: 20px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  }
+
+  .keypad button {
+    width: 60px; height: 60px; margin: 5px;
+    font-size: 1.5em; border-radius: 10px; border: none;
+    background: #ffb6c1; color: #fff; cursor: pointer;
+  }
+
+  .keypad button:hover { background: #ff69b4; }
+
+  .gallery img {
+    width: 80%; max-width: 300px;
+    margin: 10px 0; border-radius: 15px;
+  }
+
+</style>
+</head>
+<body>
+
+<!-- PIN SCREEN -->
+<div id="lock-screen" class="screen active">
+  <div class="phone">
+    <h2>Enter Passcode</h2>
+    <div id="display">••••</div>
+    <div class="keypad">
+      <button onclick="press('1')">1</button>
+      <button onclick="press('2')">2</button>
+      <button onclick="press('3')">3</button>
+      <button onclick="press('4')">4</button>
+      <button onclick="press('5')">5</button>
+      <button onclick="press('6')">6</button>
+      <button onclick="press('7')">7</button>
+      <button onclick="press('8')">8</button>
+      <button onclick="press('9')">9</button>
+      <button onclick="clearPin()">*</button>
+      <button onclick="press('0')">0</button>
+      <button onclick="checkPin()">#</button>
+    </div>
+    <p class="hint">Hint: our special date 💞</p>
+  </div>
+</div>
+
+<!-- LETTER PAGE -->
+<div id="letter" class="screen">
+  <h1>Happy First Anniversary ❤️</h1>
+  <p>
+    One year ago, something beautiful began.
+    Thank you for being my happiness, my comfort,
+    and my favorite person. I’m grateful for every
+    moment with you.
+  </p>
+  <button onclick="goTo('memory')">Next →</button>
+</div>
+
+<!-- MEMORY PAGE -->
+<div id="memory" class="screen">
+  <h1>My Favourite Memory 🌷</h1>
+  <p>
+    This moment will always stay close to my heart.
+    It reminds me how special life feels with you.
+  </p>
+  <button onclick="goTo('gallery')">Next →</button>
+</div>
+
+<!-- GALLERY PAGE -->
+<div id="gallery" class="screen">
+  <h1>Us, Through My Eyes 📸</h1>
+  <div class="gallery">
+    <img src="https://via.placeholder.com/300x200?text=Photo+1" alt="Us at the beach">
+    <img src="https://via.placeholder.com/300x200?text=Photo+2" alt="Our dinner date">
+    <img src="https://via.placeholder.com/300x200?text=Photo+3" alt="Funny moment together">
+  </div>
+  <p>And this is only the beginning 💖</p>
+</div>
+
+<script>
+let pin = "";
+const correctPin = "0211";
+
+function press(num) {
+  if (pin.length < 4) { pin += num; updateDisplay(); }
+}
+
+function updateDisplay() {
+  document.getElementById("display").textContent = "•".repeat(pin.length);
+}
+
+function clearPin() {
+  pin = ""; updateDisplay();
+}
+
+function checkPin() {
+  if (pin === correctPin) {
+    showScreen("letter");
+  } else {
+    alert("Wrong PIN 💔");
+    clearPin();
+  }
+}
+
+function showScreen(id) {
+  document.querySelectorAll(".screen").forEach(s => s.classList.remove("active"));
+  document.getElementById(id).classList.add("active");
+}
+
+function goTo(id) { showScreen(id); }
+
+document.addEventListener("keydown", function(e){
+  if(e.key >= '0' && e.key <= '9') press(e.key);
+  else if(e.key === "Backspace") clearPin();
+  else if(e.key === "Enter") checkPin();
+});
+</script>
+
+</body>
+</html>
